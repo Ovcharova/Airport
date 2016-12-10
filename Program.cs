@@ -10,7 +10,6 @@ namespace Airport
     {
         public class Flight
         {
-
             public string Airline;
             public string FlightNumber;
             public DateTime DepartureTime;
@@ -61,7 +60,7 @@ namespace Airport
                 string emergencyInf = "Acol' beseder";
 
                 var flightCollection = new List<Flight>()
-            {
+                {
                 new Flight()
                     {
                         Airline = "Pegasus Airlines",
@@ -88,8 +87,8 @@ namespace Airport
                         Gate = "2A",
                         ArrivalTime = new DateTime( 2016, 12, 07, 5, 00 , 00 ),
                         DepartureTime = new DateTime( 2016, 12, 07, 7, 00 , 00 )
-
                     },
+                    
                    new Flight()
                     {
                         Airline = "Ukr International Airlines",
@@ -116,8 +115,8 @@ namespace Airport
                         Gate = "2A",
                         ArrivalTime = new DateTime( 2016, 12, 07, 18, 00 , 00 ),
                         DepartureTime = new DateTime( 2016, 12, 07, 20, 00 , 00 )
-
                     },
+                    
                    new Flight()
                     {
                         Airline = "Ukr International Airlines",
@@ -130,8 +129,8 @@ namespace Airport
                         Gate = "2A",
                         ArrivalTime = new DateTime( 2016, 12, 07, 21, 20 , 00 ),
                         DepartureTime = new DateTime( 2016, 12, 07, 23, 50 , 00 )
-
                     },
+                    
                    new Flight()
                     {
                         Airline = "Belavia",
@@ -229,8 +228,6 @@ namespace Airport
                         ArrivalTime = new DateTime( 2016, 12, 08, 04, 45, 00 ),
                         DepartureTime = new DateTime( 2016, 12, 08, 07, 30 , 00 )
                     },
-
-
                     };
                 #endregion
 
@@ -244,14 +241,66 @@ namespace Airport
 
                     do //GET KEY LOOP
                     {
-                        Console.WriteLine("(I)nput, (D)eleting (E)diting (S)how table (F)light information E(x)it");
+                        Console.WriteLine("(I)nput, (D)eleting (E)diting (S)how table (F)light (W)Save To File information E(x)it");
                         key = Console.ReadKey();
 
-                    } while (key.KeyChar != 'i' && key.KeyChar != 'd' && key.KeyChar != 'e' && key.KeyChar != 's' && key.KeyChar != 'f' && key.KeyChar != 'x');
-
+                    } while (key.KeyChar != 'i' && key.KeyChar != 'd' && key.KeyChar != 'e' && key.KeyChar != 's' && key.KeyChar != 'f' && key.KeyChar != 'w' && key.KeyChar != 'x');
 
                     switch (key.KeyChar)
                     {
+                        case 'w':
+                            #region SAVE TABLE
+
+                            Console.WriteLine("Input file name:");
+                            string saveFilePath = Console.ReadLine();
+
+                            using (TextWriter writer = File.CreateText(saveFilePath))
+                            {
+                                writer.WriteLine("\n***Departure Table****");
+                                foreach (var flight in flightCollection)
+                                {
+                                    if (flight.DepartureAirport == currentAirportName)
+                                    {
+                                        StringBuilder stringBilder = new StringBuilder();
+                                        stringBilder.AppendFormat("{0} ", flight.Airline)
+                                            .AppendFormat("{0} ", flight.FlightNumber)
+                                            .AppendFormat("{0} ", flight.DepartureTime.ToString(format))
+                                            .AppendFormat("{0} ", flight.ArrivalTime.ToString(format))
+                                            .AppendFormat("{0} ", flight.DepartureAirport)
+                                            .AppendFormat("{0} ", flight.DepatureTerminal)
+                                            .AppendFormat("{0} ", flight.ArrivalAirport)
+                                            .AppendFormat("{0} ", flight.ArrivalTerminal)
+                                            .AppendFormat("{0} ", flight.Status)
+                                            .AppendFormat("{0} ", flight.Gate);
+                                        writer.WriteLine(stringBilder.ToString());
+                                    }
+                                }
+
+                                writer.WriteLine("\n***Arrival Table****");
+                                foreach (var flight in flightCollection)
+                                {
+                                    if (flight.ArrivalAirport == currentAirportName)
+                                    {
+                                        StringBuilder stringBilder = new StringBuilder();
+                                        stringBilder.AppendFormat("{0} ", flight.Airline)
+                                            .AppendFormat("{0} ", flight.FlightNumber)
+                                            .AppendFormat("{0} ", flight.DepartureTime.ToString(format))
+                                            .AppendFormat("{0} ", flight.ArrivalTime.ToString(format))
+                                            .AppendFormat("{0} ", flight.DepartureAirport)
+                                            .AppendFormat("{0} ", flight.DepatureTerminal)
+                                            .AppendFormat("{0} ", flight.ArrivalAirport)
+                                            .AppendFormat("{0} ", flight.ArrivalTerminal)
+                                            .AppendFormat("{0} ", flight.Status)
+                                            .AppendFormat("{0} ", flight.Gate);
+                                        writer.WriteLine(stringBilder.ToString());
+                                    }`
+                                }
+                                writer.WriteLine(String.Format("Info: {0}", emergencyInf));
+                            }
+
+                            #endregion
+
+                            break;
                         case 'i':
 
                             #region Add New Element
@@ -298,11 +347,8 @@ namespace Airport
                             Console.WriteLine("Gate:");
                             gate = Console.ReadLine();
 
-
-
                             Flight newFlight = new Flight
                             {
-
                                 Airline = airline,
                                 FlightNumber = flightNumber,
                                 DepartureTime = departureTime,
@@ -433,7 +479,6 @@ namespace Airport
                                     var newStatus = Console.ReadLine();
                                     status = (Status)Enum.Parse(typeof(Status), newStatus);
                                     flightCollection[editFlyIndex].Status = status;
-
                                     break;
                                 case '9':
                                     Console.WriteLine("New Gate:");
@@ -441,7 +486,6 @@ namespace Airport
                                     flightCollection[editFlyIndex].Gate = newGate;
                                     break;
                             }
-
 
                             #endregion
 
@@ -466,10 +510,8 @@ namespace Airport
                                         .AppendFormat("{0} ", flight.Status)
                                         .AppendFormat("{0} ", flight.Gate);
                                     Console.WriteLine(stringBilder.ToString());
-
                                 }
                             }
-
 
                             Console.WriteLine("\n***Arrival Table****");
                             foreach (var flight in flightCollection)
@@ -488,16 +530,13 @@ namespace Airport
                                         .AppendFormat("{0} ", flight.Status)
                                         .AppendFormat("{0} ", flight.Gate);
                                     Console.WriteLine(stringBilder.ToString());
-
                                 }
                             }
-
 
                             var color = Console.ForegroundColor;
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine(String.Format("Info: {0}", emergencyInf));
                             Console.ForegroundColor = color;
-
                             #endregion
 
                             break;
@@ -571,7 +610,7 @@ namespace Airport
                                         break;
                                     }
                                     break;
-                               case '4':
+                                case '4':
                                     Console.WriteLine("DepartureAirport:");
                                     string infoDepartureAirport;
                                     infoDepartureAirport = Console.ReadLine();
@@ -620,21 +659,17 @@ namespace Airport
                                     }
                                     break;
                             }
-                                    #endregion
+                            #endregion
 
                             break;
 
-
-                            case 'x':
+                        case 'x':
                             exitKeyPassed = true;
                             break;
                     }
 
-
-
                     Console.ReadKey();
                 } while (!exitKeyPassed);
-
             }
         }
     }
