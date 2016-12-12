@@ -380,6 +380,7 @@ namespace Airport
                                 if (item.FlightNumber == flightNumberForDelete)
                                 {
                                     findedFlight = item;
+                                    break;
                                 }
                             }
                             flightCollection.Remove(findedFlight);
@@ -404,6 +405,7 @@ namespace Airport
                                 if (flightNumberForEdit == flight.FlightNumber)
                                 {
                                     editFlyIndex = i;
+                                    break;
                                 }
                             }
 
